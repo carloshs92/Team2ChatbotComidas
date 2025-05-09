@@ -170,9 +170,9 @@ def init():
     db = connectDatabase()
     utils_functions = utils(db)
     twilio_client = initTwilioClient()  # Inicializar el cliente de Twilio aquí
-    return [model, tokenizer, db, utils_functions, twilio_client] # Devolver el cliente
+    return model, tokenizer, db, utils_functions, twilio_client # Devolver el cliente
 
-[model, tokenizer,  utils_functions] = init() # Obtener el cliente
+model, tokenizer,  utils_functions = init() # Obtener el cliente
 app = Flask(__name__)
 
 @app.route('/whatsapp', methods=['POST'])
