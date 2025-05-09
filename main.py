@@ -173,5 +173,55 @@ def init():
     return model, tokenizer, db, utils_functions, twilio_client # Devolver el cliente
 
 model, tokenizer, db, utils_functions, twilio_client = init() # Obtener el cliente
-testConversation()
 
+app = Flask(__name__)
+
+@app.route('/whatsapp', methods=['POST'])
+def whatsapp_mymessage():
+    incoming_msg = request.values.get('Body', '').lower()
+    print("Mensaje recibido:", incoming_msg)
+
+    respuesta = ""
+    contexto = utils_functions.obtener_contexto()
+
+    promociones_keywords = ["que promociones", "descuentos", "ofertas"]
+    precio_keywords = ["precio", "cuánto cuesta", "cual es el costo", "cuanto vale"]
+
+    try:
+        if any(keyword in incoming_msg for keyword in precio_keywords):
+            producto = utils_functions.extraer_plato(incoming_msg)
+            if producto:
+                respuesta = utils_functions.buscar_precio(producto)
+                if not respuesta:
+                    respuesta = f"Lo siento, no encontré detalles para el plato '{producto}'."
+            else:
+                respuesta = "No contamos con ese plato ¿Puedes pedir otro?"
+        elif any(keyword in incoming_msg for keyword in promociones_keywords):
+            promocion = utils_functions.extraer_promocion(incoming_msg)
+            if promocion:
+                respuesta = utils_functions.buscar_promociones(promocion)
+                if not respuesta:
+                    respuesta = f"Lo siento, no encontré detalles de la promocion."
+            else:
+                respuesta = "No hay promocion para ello"
+        else:
+            prompt = (
+                f"{contexto}\n\n"
+                f"Usuario: {incoming_msg}\n"
+                f"Asistente:"
+            )
+
+            inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+            outputs = model.generate(**inputs, max_new_tokens=100, do_sample=True, temperature=0.7)
+            respuesta_generada = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            respuesta = respuesta_generada.replace(prompt, "").strip()
+
+        print("Respuesta generada:", respuesta)
+        return f"<Response><Message>{respuesta}</Message></Response>"
+
+    except Exception as e:
+        print(f"Error al procesar el mensaje: {e}")
+        return "<Response><Message>Lo siento, hubo un error al procesar tu solicitud.</Message></Response>"
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
