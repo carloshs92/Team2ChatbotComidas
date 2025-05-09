@@ -86,7 +86,7 @@ def testConversation():
 def connectDatabase():
     try:
         if not firebase_admin._apps:
-            cred = credentials.Certificate("/db.json")
+            cred = credentials.Certificate("db.json")
             firebase_admin.initialize_app(cred)
         return firestore.client()
     except Exception as e:
