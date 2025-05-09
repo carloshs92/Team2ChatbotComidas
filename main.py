@@ -173,6 +173,8 @@ def init():
     return model, tokenizer, db, utils_functions, twilio_client # Devolver el cliente
 
 model, tokenizer, db, utils_functions, twilio_client = init() # Obtener el cliente
+testConversation()
+
 app = Flask(__name__)
 
 @app.route('/whatsapp', methods=['POST'])
