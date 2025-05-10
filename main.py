@@ -224,4 +224,4 @@ def whatsapp_mymessage():
         return "<Response><Message>Lo siento, hubo un error al procesar tu solicitud.</Message></Response>"
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, ssl_context='adhoc')
