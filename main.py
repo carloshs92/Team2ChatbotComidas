@@ -176,8 +176,9 @@ model, tokenizer, db, utils_functions, twilio_client = init() # Obtener el clien
 
 app = Flask(__name__)
 
-@app.route('/whatsapp', methods=['POST'])
+@app.route('/whatsapp', methods=["GET", "POST"])
 def whatsapp_mymessage():
+    print("Request recibido:", request)
     incoming_msg = request.values.get('Body', '').lower()
     print("Mensaje recibido:", incoming_msg)
 
@@ -223,5 +224,5 @@ def whatsapp_mymessage():
         print(f"Error al procesar el mensaje: {e}")
         return "<Response><Message>Lo siento, hubo un error al procesar tu solicitud.</Message></Response>"
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, ssl_context='adhoc')
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
