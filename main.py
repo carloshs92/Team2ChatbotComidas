@@ -168,39 +168,47 @@ def utils(db):
 def init():
     model, tokenizer = load_model("carloshuamani/Llama-3.2-ComidaPeruana")
     db = connectDatabase()
-    utils_functions = utils(db)
     twilio_client = initTwilioClient()  # Inicializar el cliente de Twilio aquí
-    return model, tokenizer, db, utils_functions, twilio_client # Devolver el cliente
+    return model, tokenizer, db, twilio_client # Devolver el cliente
 
-model, tokenizer, db, utils_functions, twilio_client = init() # Obtener el cliente
+model, tokenizer, db, twilio_client = init() # Obtener el cliente
 
 app = Flask(__name__)
 
+
 @app.route('/whatsapp', methods=["GET", "POST"])
 def whatsapp_mymessage():
+    (
+        obtener_contexto,
+        normalizar,
+        extraer_plato,
+        buscar_precio,
+        extraer_promocion,
+        buscar_promociones,
+    ) = utils(db)
     print("Request recibido:", request)
     incoming_msg = request.values.get('Body', '').lower()
     print("Mensaje recibido:", incoming_msg)
 
     respuesta = ""
-    contexto = utils_functions.obtener_contexto()
+    contexto = obtener_contexto()
 
     promociones_keywords = ["que promociones", "descuentos", "ofertas"]
     precio_keywords = ["precio", "cuánto cuesta", "cual es el costo", "cuanto vale"]
 
     try:
         if any(keyword in incoming_msg for keyword in precio_keywords):
-            producto = utils_functions.extraer_plato(incoming_msg)
+            producto = extraer_plato(incoming_msg)
             if producto:
-                respuesta = utils_functions.buscar_precio(producto)
+                respuesta = buscar_precio(producto)
                 if not respuesta:
                     respuesta = f"Lo siento, no encontré detalles para el plato '{producto}'."
             else:
                 respuesta = "No contamos con ese plato ¿Puedes pedir otro?"
         elif any(keyword in incoming_msg for keyword in promociones_keywords):
-            promocion = utils_functions.extraer_promocion(incoming_msg)
+            promocion = extraer_promocion(incoming_msg)
             if promocion:
-                respuesta = utils_functions.buscar_promociones(promocion)
+                respuesta = buscar_promociones(promocion)
                 if not respuesta:
                     respuesta = f"Lo siento, no encontré detalles de la promocion."
             else:
