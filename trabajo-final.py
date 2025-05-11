@@ -81,7 +81,7 @@ def utils(db):
         else:
             return None
 
-    return obtener_contexto, normalizar, extraer_electro, buscar_precio
+    return obtener_contexto, extraer_electro, buscar_precio
     
 def init():
     model, tokenizer = load_model("carloshuamani/Llama-3.2-ArticulosElectronicos")
