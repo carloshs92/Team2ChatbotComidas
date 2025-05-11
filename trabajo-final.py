@@ -119,7 +119,7 @@ def whatsapp_mymessage():
                 if not respuesta:
                     respuesta = f"Lo siento, no encontré detalles para el producto '{producto}'."
             else:
-                respuesta = "No contamos con ese prodcuto ¿Puedes pedir otro?"
+                respuesta = "No contamos con ese producto ¿Puedes pedir otro?"
         else:
             prompt = (
                 f"{contexto}\n\n"
