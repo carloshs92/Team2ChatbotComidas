@@ -50,7 +50,7 @@ def utils(db):
         )
 
     def normalizar(texto):
-        texto = texto.lower()
+        texto = texto
         texto = unicodedata.normalize('NFKD', texto).encode('ASCII', 'ignore').decode('utf-8')
         return texto
 
@@ -100,7 +100,7 @@ def whatsapp_mymessage():
         buscar_precio,
     ) = utils(db)
     print("Request recibido:", request)
-    incoming_msg = request.values.get('Body', '').lower()
+    incoming_msg = request.values.get('Body', '')
     print("Mensaje recibido:", incoming_msg)
 
     respuesta = ""
