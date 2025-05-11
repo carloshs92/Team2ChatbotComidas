@@ -114,9 +114,9 @@ def whatsapp_mymessage():
             if producto:
                 respuesta = buscar_precio(producto)
                 if not respuesta:
-                    respuesta = f"Lo siento, no encontré detalles para el plato '{producto}'."
+                    respuesta = f"Lo siento, no encontré detalles para el producto '{producto}'."
             else:
-                respuesta = "No contamos con ese plato ¿Puedes pedir otro?"
+                respuesta = "No contamos con ese prodcuto ¿Puedes pedir otro?"
         else:
             prompt = (
                 f"{contexto}\n\n"
