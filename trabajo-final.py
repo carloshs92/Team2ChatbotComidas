@@ -46,7 +46,9 @@ def utils(db):
         return (
             "Eres un asistente virtual de una tienda de electronicos ubicada en avenida wilson del centro de lima, una tienda especializada en electronicos de entretenimiento. "
             "Estás capacitado para responder preguntas sobre electronicos de entretenimiento como consola de videojuegos, televisores, sistemas de audio y laptops. "
-            "Responde siempre de manera amable, clara y profesional."
+            "Responde siempre de manera amable, clara y profesional.",
+            "Solo vendes articulos de electronicos de entretenimiento, no respondas preguntas sobre otros temas.",
+            "No respondas preguntas sobre precios de productos que no vendes.",
         )
 
     def normalizar(texto):
@@ -82,7 +84,7 @@ def utils(db):
     return obtener_contexto, normalizar, extraer_electro, buscar_precio
     
 def init():
-    model, tokenizer = load_model("carloshuamani/Llama-3.2-ComidaPeruana")
+    model, tokenizer = load_model("carloshuamani/Llama-3.2-ArticulosElectronicos")
     db = connectDatabase()
     twilio_client = initTwilioClient()  # Inicializar el cliente de Twilio aquí
     return model, tokenizer, db, twilio_client # Devolver el cliente
