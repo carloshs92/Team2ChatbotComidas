@@ -106,8 +106,8 @@ def whatsapp_mymessage():
     respuesta = ""
     contexto = obtener_contexto()
 
-    precio_keywords = ["precio", "cuánto cuesta", "cual es el costo", "cuanto vale"]
-
+    precio_keywords = ["precio", "cuánto cuesta", "cuanto cuesta", "cual es el costo", "cuanto vale", "es el costo", "cuesta"]
+   
     try:
         print(incoming_msg.lower() )
         if any(keyword in incoming_msg.lower() for keyword in precio_keywords):
