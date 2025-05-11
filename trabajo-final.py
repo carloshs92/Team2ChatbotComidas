@@ -111,8 +111,10 @@ def whatsapp_mymessage():
     try:
         if any(keyword in incoming_msg for keyword in precio_keywords):
             producto = extraer_electro(incoming_msg)
+            print("Producto extraído:", producto)
             if producto:
                 respuesta = buscar_precio(producto)
+                print("Precio+ extraído:", respuesta)
                 if not respuesta:
                     respuesta = f"Lo siento, no encontré detalles para el producto '{producto}'."
             else:
