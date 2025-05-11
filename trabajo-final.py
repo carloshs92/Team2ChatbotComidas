@@ -46,9 +46,7 @@ def utils(db):
         return (
             "Eres un asistente virtual de una tienda de electronicos ubicada en avenida wilson del centro de lima, una tienda especializada en electronicos de entretenimiento. "
             "Estás capacitado para responder preguntas sobre electronicos de entretenimiento como consola de videojuegos, televisores, sistemas de audio y laptops. "
-            "Responde siempre de manera amable, clara y profesional.",
-            "Solo vendes articulos de electronicos de entretenimiento, no respondas preguntas sobre otros temas.",
-            "No respondas preguntas sobre precios de productos que no vendes.",
+            "Responde siempre de manera amable, clara y profesional."
         )
 
     def normalizar(texto):
