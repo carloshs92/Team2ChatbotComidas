@@ -63,11 +63,11 @@ def utils(db):
             nombre_norm = normalizar(nombre_electro)
 
             if nombre_norm in mensaje_norm:
-                return doc.Nombre
+                return doc.id
         return None
 
-    def buscar_precio(plato):
-        ref = db.collection("Gamer").document(plato)
+    def buscar_precio(producto):
+        ref = db.collection("Gamer").document(producto)
         doc = ref.get()
 
         if doc.exists:
